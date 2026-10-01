@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="국가연구개발혁신법·시행령·연구개발비 사용 기준과 농촌진흥청 운영규정·매뉴얼 조문 검색">
+<meta name="theme-color" content="#1f6b52">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="R&amp;D 규정">
+<title>농업 R&amp;D 규정 검색</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Layout: one calm reading column (search → results), statute text opens in a right-hand sheet. Two source colors only: 범부처(blue) / 농진청(green). */
+:root{
+  --bg:#f6f7f6; --panel:#ffffff; --ink:#1b2320; --muted:#66736d; --line:#e2e7e4;
+  --accent:#1f6b52; --nat:#2f55a4; --nat-soft:#e8eef9; --rda:#1f6b52; --rda-soft:#e3f1ea;
+  --mark:#fcebb0; --mark-ink:#1b2320; --scrim:rgba(20,28,25,.28);
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-law:"Noto Serif KR","AppleMyungjo","Batang",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121715; --panel:#1a211e; --ink:#e6ece9; --muted:#9aa8a1; --line:#2a3430;
+  --accent:#72c7a3; --nat:#93b3ee; --nat-soft:#1f2a3d; --rda:#72c7a3; --rda-soft:#1c2f27;
+  --mark:#655518; --mark-ink:#fff7da; --scrim:rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121715; --panel:#1a211e; --ink:#e6ece9; --muted:#9aa8a1; --line:#2a3430;
+  --accent:#72c7a3; --nat:#93b3ee; --nat-soft:#1f2a3d; --rda:#72c7a3; --rda-soft:#1c2f27;
+  --mark:#655518; --mark-ink:#fff7da; --scrim:rgba(0,0,0,.5); color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;margin:0;word-break:keep-all;overflow-wrap:anywhere}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+mark{background:var(--mark);color:var(--mark-ink);border-radius:2px;padding:0 1px}
+
+.wrap{max-width:760px;margin:0 auto;padding-block:0 64px;padding-inline:20px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:18px 8px;flex-wrap:wrap}
+.brand{font-family:var(--f-law);font-weight:700;font-size:18px;letter-spacing:-.01em;background:none;border:0;padding:0}
+.modes{display:flex;gap:18px}
+.modes button{background:none;border:0;padding:4px 0;color:var(--muted);font-weight:500;border-bottom:2px solid transparent}
+.modes button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+
+.sbox{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:6px 6px 6px 16px;margin-top:14px}
+.sbox:focus-within{border-color:var(--accent)}
+.sbox input{flex:1;min-width:0;border:0;background:transparent;padding:8px 0;font-size:16px;outline:none}
+.go{border:0;background:var(--ink);color:var(--bg);border-radius:10px;padding:8px 16px;font-weight:600}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px}
+.seg{display:flex;gap:2px;background:var(--line);border-radius:9px;padding:2px}
+.seg button{border:0;background:transparent;border-radius:7px;padding:4px 11px;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--ink);font-weight:500}
+.filters select{border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:4px 8px;font-size:13px;max-width:100%}
+
+.count{font-size:13px;color:var(--muted);margin:22px 0 4px}
+.hit{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:14px 2px}
+.hit:hover .tt{color:var(--accent)}
+.src{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.src::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c)}
+.src.nat{--c:var(--nat)} .src.rda{--c:var(--rda)}
+.src b{font-weight:600;color:var(--c)}
+.tt{display:block;font-family:var(--f-law);font-weight:700;font-size:16px;margin-top:2px}
+.sn{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--muted);font-size:13.5px;margin-top:3px}
+.more{margin-top:14px;border:1px solid var(--line);background:var(--panel);border-radius:9px;padding:6px 14px;font-size:13px}
+
+.home h2{font-size:12px;letter-spacing:.08em;color:var(--muted);font-weight:600;margin:30px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 12px;font-size:13.5px}
+.chip:hover{border-color:var(--accent)}
+.doclist{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.doclist ul{list-style:none;margin:0;padding:0}
+.doclist li button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:8px 0}
+.doclist li button:hover span:first-child{color:var(--accent)}
+.doclist small{display:block;color:var(--muted);font-size:12px}
+.orgh{font-size:13px;font-weight:600;margin:0 0 4px}
+.orgh.nat{color:var(--nat)} .orgh.rda{color:var(--rda)}
+.foot{margin-top:36px;font-size:12px;color:var(--muted);line-height:1.7}
+.notice{margin-top:14px;font-size:13px;background:var(--rda-soft);border-radius:10px;padding:8px 12px}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:9}
+.sheet{position:fixed;top:0;right:0;bottom:0;width:min(680px,100%);background:var(--panel);z-index:10;overflow:auto;box-shadow:-8px 0 30px rgba(0,0,0,.12);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.sh-in{padding-block:18px 40px;padding-inline:24px}
+.sh-bar{display:flex;align-items:center;gap:8px;position:sticky;top:0;background:var(--panel);padding-block:10px;margin-top:-10px;z-index:1}
+.sh-bar .sp{flex:1}
+.ghost{border:1px solid var(--line);background:none;border-radius:8px;padding:4px 10px;font-size:13px}
+.ghost:hover{border-color:var(--accent)}
+.sh-meta{font-size:12.5px;color:var(--muted);margin-top:6px}
+.sh-path{font-size:12.5px;color:var(--muted);margin-top:16px}
+.sh-title{font-family:var(--f-law);font-size:22px;line-height:1.4;margin:2px 0 16px;text-wrap:balance}
+.body{font-family:var(--f-law);font-size:15.5px;line-height:1.9}
+.body p{margin:0 0 6px}
+.l1{padding-left:1.4em;text-indent:-1.4em}
+.l2{padding-left:2.6em;text-indent:-1.3em}
+.l3{padding-left:3.8em;text-indent:-1.3em}
+.note{font-family:var(--f-body);font-size:13px;color:var(--muted)}
+.xref{color:var(--accent);cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.tbl{overflow-x:auto;margin:8px 0 12px}
+.tbl table{border-collapse:collapse;font-family:var(--f-body);font-size:13px;line-height:1.5;min-width:100%}
+.tbl td{border:1px solid var(--line);padding:6px 9px;vertical-align:top}
+.tbl tr:first-child td{background:var(--bg);font-weight:600}
+.sh-nav{display:flex;justify-content:space-between;gap:10px;margin-top:26px;padding-top:12px;border-top:1px solid var(--line)}
+.sh-nav button{background:none;border:0;color:var(--accent);font-size:13px;max-width:48%;padding:4px 0;text-align:left}
+.sh-nav button:last-child{text-align:right}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:8px;font-size:13px;z-index:20}
+
+.hd-note{font-size:12px;color:var(--muted)}
+/* ask */
+.askbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;margin-top:14px}
+.askbox:focus-within{border-color:var(--accent)}
+.askbox textarea{width:100%;box-sizing:border-box;border:0;background:transparent;resize:vertical;min-height:72px;padding:6px 8px;font-size:15.5px;outline:none}
+.askrow{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.askrow .st{margin-right:auto;font-size:12.5px;color:var(--muted)}
+.pin{font-size:12.5px;color:var(--muted);padding:0 8px 6px}
+.pin button{border:0;background:none;color:var(--muted);padding:0 4px}
+.thread{display:flex;flex-direction:column;gap:18px;margin-top:22px}
+.q{align-self:flex-end;background:var(--line);border-radius:14px 14px 3px 14px;padding:8px 13px;max-width:85%}
+.a{min-width:0}
+.a .md{line-height:1.8}
+.a .md h4{font-family:var(--f-law);font-size:15px;margin:16px 0 4px}
+.a .md p{margin:0 0 8px}
+.a .md ul,.a .md ol{margin:0 0 8px;padding-left:1.3em}
+.a .wait{color:var(--muted);font-size:14px}
+.cite{display:inline-flex;align-items:center;gap:4px;border-radius:5px;padding:0 6px;margin:0 2px;font-size:12px;line-height:1.7;cursor:pointer;border:0;font-family:var(--f-body);vertical-align:baseline;white-space:nowrap}
+.cite.nat{background:var(--nat-soft);color:var(--nat)} .cite.rda{background:var(--rda-soft);color:var(--rda)}
+.cite i{font-style:normal;font-weight:600}
+.srcs{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);display:grid;gap:6px;font-size:12.5px}
+.srcs .row{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.srcs .lbl{color:var(--muted);min-width:92px}
+.fine{font-size:12px;color:var(--muted);margin-top:26px}
+
+@media (max-width:560px){ .wrap{padding-inline:16px} .sh-in{padding-inline:16px} .seg button{padding:4px 8px} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <button class="brand" id="home" type="button">농업 R&amp;D 규정 검색</button>
+    <span class="hd-note" id="hdnote"></span>
+  </header>
+  <main id="main">
+    <form class="sbox" role="search"><input type="search" placeholder="규정 데이터를 불러오는 중…" disabled><button class="go" type="submit" disabled>검색</button></form>
+  </main>
+</div>
+<div class="scrim" id="scrim" hidden></div>
+<aside class="sheet" id="sheet" hidden aria-label="조문 원문"></aside>
+
+<script>
+(async function(){
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let D;
+try{ D = await (await fetch('data.json',{cache:'no-cache'})).json(); }
+catch(e){ $('main').innerHTML='<p class="count">규정 데이터를 불러오지 못했습니다. 페이지를 새로고침해 주세요.</p>'; return; }
+try{const st=await (await fetch('status.json',{cache:'no-cache'})).json(); if(st){D.checked=st.checked; D.updates=st.updates||[];}}catch(e){}
+const docs=D.docs, S=D.secs, DOC=Object.fromEntries(docs.map(d=>[d.id,d]));
+const ORG={nat:'범부처',rda:'농진청'}, ORGFULL={nat:'범부처 법령·고시 (과기정통부 소관)',rda:'농촌진흥청 규정·매뉴얼'};
+$('hdnote').textContent=D.checked?`개정 확인 ${D.checked}`:'';
+const RANK=Object.fromEntries(docs.map((d,i)=>[d.id,i+1]));
+const LAWDOCS=new Set(['act','decree','rule','cost','rda','pub','note','dist']);
+const norm=s=>s.toLowerCase().replace(/[\s·ㆍ‧∙・]/g,'');
+S.forEach((s,i)=>{s.i=i; s.nt=norm(s.t); s.nx=norm(s.x); s.np=norm(s.p||'');});
+const byDoc={}; S.forEach(s=>(byDoc[s.d]=byDoc[s.d]||[]).push(s));
+
+let mode='search', scope='all', docSel='', lastQ='', terms=[], shown=30;
+
+// ---------- search engine
+const SYN={'3책5공':['동시수행','동시에수행할수있는연구개발과제'],'동시수행':['3책5공'],'rcms':['통합정보시스템','rcms'],'연구비':['연구개발비'],'책임자':['연구책임자'],'중단':['중단','해약'],'협약변경':['협약의변경','협약변경'],'장비':['연구시설ㆍ장비','장비'],'수당':['연구수당'],'출장':['국내외출장','출장']};
+const JOSA=['으로부터','에서는','이라도','입니까','인가요','있나요','없나요','되나요','하나요','할까요','인지','에서','으로','에게','부터','까지','이나','하고','보다','에는','에도','이라','을','를','이','가','은','는','의','에','로','와','과','도','만','요'];
+const STOP=new Set(['어떻게','무엇','뭐','경우','있나요','되나요','가능','가능한가요','가능한지','하는','할','수','있는','관련','대해','대한','알려줘','알려주세요','궁금','궁금합니다','방법','어디','언제','얼마','인가요','해야','하나요','인지','기준','규정','조항','조문','어떤','필요한가요','필요']);
+const strip=w=>{let x=w;for(let k=0;k<2;k++)for(const j of JOSA){if(x.length>j.length+1&&x.endsWith(j)){x=x.slice(0,-j.length);break;}}return x;};
+function termsOf(q){const out=[];for(const w of q.replace(/[?？!.,「」『』“”"'()\[\]]/g,' ').split(/\s+/).filter(Boolean)){const t=strip(w);if((t.length<2&&!/\d/.test(t))||STOP.has(t)||STOP.has(w))continue;out.push(norm(t));}return [...new Set(out)];}
+function score(s,ts,phrase){
+  let sc=0,m=0;
+  for(const t of ts){let best=0;for(const a of [t,...(SYN[t]||[]).map(norm)]){let v=0;if(s.nt.includes(a))v+=40;if(s.np.includes(a))v+=8;let c=0,p=s.nx.indexOf(a);while(p>-1&&c<25){c++;p=s.nx.indexOf(a,p+a.length);}if(c)v+=10+8*Math.log2(1+c);if(a!==t)v*=.8;best=Math.max(best,v);}if(best)m++;sc+=best;}
+  if(!m)return 0;
+  if(phrase.length>3&&s.nx.includes(phrase))sc+=40;
+  sc*=m===ts.length?1:.35*m/ts.length;
+  if(s.t==='시행 정보')sc*=.15;
+  sc*=1+(14-RANK[s.d])*.012; sc/=1+Math.max(0,s.x.length-6000)/30000;
+  return sc;
+}
+function search(q,pool,limit){const ts=termsOf(q);if(!ts.length)return{ts,hits:[]};const ph=norm(q),h=[];for(const s of pool){const v=score(s,ts,ph);if(v>0)h.push([v,s]);}h.sort((a,b)=>b[0]-a[0]);return{ts,hits:h.slice(0,limit).map(x=>x[1])};}
+const ALIAS=[[/^(혁신법|법률?|국가연구개발혁신법)$/,'act'],[/^(시행령|영|혁신법시행령)$/,'decree'],[/^(시행규칙|규칙|혁신법시행규칙)$/,'rule'],[/^(사용기준|연구개발비사용기준|고시)$/,'cost'],[/^(운영규정|규정|훈령|농진청운영규정)$/,'rda'],[/^(연구노트지침|연구노트|노트지침)$/,'note'],[/^(대외발표규정|대외발표)$/,'pub']];
+const artKey=s=>{const m=s.t.match(/^(부칙 )?제(\d+)조(?:의(\d+))?/);return m&&!m[1]?[+m[2],m[3]?+m[3]:0]:null;};
+function refHits(q,pool){
+  const c=q.replace(/\s/g,'');
+  const f=c.match(/^【?(별표|별지)제?(\d+(?:-\d+)?)호?(서식)?】?$/);
+  if(f){const k=norm(f[1]==='별지'?`별지제${f[2]}호`:`별표${f[2]}`);return pool.filter(s=>norm(s.t).replace(/[【】]/g,'').startsWith(k));}
+  const m=c.match(/^(.*?)제?(\d+)조(?:의(\d+))?$/); if(!m)return[];
+  let d=null; for(const[re,id]of ALIAS)if(re.test(m[1]))d=id; if(m[1]&&!d)return[];
+  return pool.filter(s=>{const k=artKey(s);return k&&k[0]===+m[2]&&k[1]===(m[3]?+m[3]:0)&&(!d||s.d===d)&&LAWDOCS.has(s.d);}).sort((a,b)=>RANK[a.d]-RANK[b.d]);
+}
+function hlRe(ts){const p=[];for(const t of ts)for(const a of [t,...(SYN[t]||[]).map(norm)])p.push([...a].map(c=>c.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('[\\s·ㆍ]*'));if(!p.length)return null;p.sort((a,b)=>b.length-a.length);return new RegExp('('+p.join('|')+')','gi');}
+const srcTag=d=>`<span class="src ${DOC[d].org}"><b>${ORG[DOC[d].org]}</b>${esc(DOC[d].short)}</span>`;
+
+// ---------- views
+function setMode(){mode='search';renderSearch();}
+$('home').onclick=()=>{lastQ='';setMode('search');};
+
+function searchHeader(){
+  const opts=docs.filter(d=>scope==='all'||d.org===scope).map(d=>`<option value="${d.id}" ${docSel===d.id?'selected':''}>${esc(d.short)}</option>`).join('');
+  return `<form class="sbox" id="sform" role="search"><input id="q" type="search" autocomplete="off" value="${esc(lastQ)}" placeholder="예: 간접비 비율, 운영규정 제20조, 연구노트 보존"><button class="go" type="submit">검색</button></form>
+  <div class="filters"><div class="seg" role="group" aria-label="출처">${[['all','전체'],['nat','범부처'],['rda','농진청']].map(([k,l])=>`<button type="button" data-scope="${k}" aria-pressed="${scope===k}">${l}</button>`).join('')}</div>
+  <select id="docsel" aria-label="문서"><option value="">모든 문서</option>${opts}</select></div>`;
+}
+const TOPICS=['간접비','학생인건비','3책5공','협약 변경','연구수당','연구노트 보존','제재부가금','이월','기술료','연구개발비 정산'];
+function renderSearch(){
+  let h=searchHeader();
+  if(!lastQ){
+    const recent=(D.updates||[]).filter(u=>Date.now()-new Date(u.date).getTime()<45*864e5 && u.ok!==false);
+    if(recent.length) h+=`<div class="notice">최근 개정 반영: ${recent.map(u=>`${esc(u.doc)} (${esc(u.to)})`).join(', ')}</div>`;
+    h+=`<div class="home"><h2>자주 찾는 주제</h2><div class="chips">${TOPICS.map(t=>`<button type="button" class="chip" data-q="${t}">${t}</button>`).join('')}</div>
+    <h2>규정 목록</h2><div class="doclist">${['nat','rda'].map(o=>`<div><p class="orgh ${o}">${ORGFULL[o]}</p><ul>${docs.filter(d=>d.org===o).map(d=>`<li><button type="button" data-toc="${d.id}"><span>${esc(d.name)}</span><small>${esc(d.meta)}</small></button></li>`).join('')}</ul></div>`).join('')}</div>
+    <p class="foot">법령·고시·훈령 8종은 매일 0시 국가법령정보센터 현행본과 대조합니다. 마지막 확인 ${esc(D.checked||'')}.<br>농진청 운영매뉴얼·서식, 연구개발비 관리지침, 성과지표 정의서는 국가법령정보센터에 없어 개정 파일을 받아 반영합니다.</p></div>`;
+    $('main').innerHTML=h; bindSearch(); return;
+  }
+  const pool=S.filter(s=>(scope==='all'||DOC[s.d].org===scope)&&(!docSel||s.d===docSel));
+  let hits=refHits(lastQ,pool); terms=[];
+  if(!hits.length){const r=search(lastQ,pool,200);hits=r.hits;terms=r.ts;}
+  const re=hlRe(terms);
+  h+=`<p class="count">${hits.length?`${hits.length}${hits.length===200?'+':''}건`:'찾는 조문이 없습니다. 핵심어만 남기거나 출처를 “전체”로 바꿔 보세요.'}</p>`;
+  for(const s of hits.slice(0,shown)){
+    const x=s.x.replace(/\[\/?표\]/g,' ').replace(/\s*\|\s*/g,' · ');
+    let pos=0; if(re){re.lastIndex=0;const m=re.exec(x);if(m)pos=Math.max(0,m.index-40);}
+    let sn=esc((pos?'…':'')+x.slice(pos,pos+180)); if(re)sn=sn.replace(re,'<mark>$1</mark>');
+    h+=`<button type="button" class="hit" data-s="${s.i}">${srcTag(s.d)}<span class="tt">${esc(s.t)}</span><span class="sn">${sn}</span></button>`;
+  }
+  if(hits.length>shown) h+=`<button type="button" class="more" id="more">결과 더 보기 (${hits.length-shown}건)</button>`;
+  $('main').innerHTML=h; bindSearch();
+  const mo=$('more'); if(mo) mo.onclick=()=>{shown+=30;renderSearch();};
+}
+function bindSearch(){
+  $('sform').onsubmit=e=>{e.preventDefault();lastQ=$('q').value.trim();shown=30;renderSearch();};
+  $('docsel').onchange=e=>{docSel=e.target.value;if(lastQ)renderSearch();};
+}
+function showToc(d){
+  let h=searchHeader()+`<p class="count">${srcTag(d)} · ${esc(DOC[d].meta)}</p>`; let lp=null;
+  for(const s of byDoc[d]){ if(s.p&&s.p!==lp) h+=`<p class="count" style="margin-top:18px;color:var(--ink);font-weight:600">${esc(s.p)}</p>`; lp=s.p;
+    h+=`<button type="button" class="hit" data-s="${s.i}" style="padding:9px 2px"><span class="tt" style="font-size:15px;margin:0">${esc(s.t)}</span></button>`; }
+  $('main').innerHTML=h; bindSearch(); window.scrollTo(0,0);
+}
+$('main').addEventListener('click',e=>{
+  const t=e.target.closest('[data-scope],[data-q],[data-toc],[data-s],[data-cite]'); if(!t)return;
+  if(t.dataset.scope){scope=t.dataset.scope; if(docSel&&scope!=='all'&&DOC[docSel].org!==scope)docSel=''; renderSearch();}
+  else if(t.dataset.q){lastQ=t.dataset.q;shown=30;renderSearch();}
+  else if(t.dataset.toc) showToc(t.dataset.toc);
+  else if(t.dataset.s) openSec(+t.dataset.s);
+  else if(t.dataset.cite) openSec(+t.dataset.cite);
+});
+
+// ---------- sheet
+const lineCls=l=>/^[①-⑳]/.test(l)?'l1':/^(\d+\.|\d+\))/.test(l)?'l2':/^([가-하][.)]|\(\d+\))/.test(l)?'l3':/^[<\[※]/.test(l)?'note':'';
+const REFDOC={'법':'act','영':'decree','규칙':'rule','시행령':'decree','시행규칙':'rule','국가연구개발혁신법':'act','「국가연구개발혁신법」':'act','「국가연구개발혁신법 시행령」':'decree','운영규정':'rda'};
+function linkify(h,d){ if(!LAWDOCS.has(d))return h;
+  return h.replace(/(「국가연구개발혁신법 시행령」|「국가연구개발혁신법」|국가연구개발혁신법|시행규칙|시행령|규칙|운영규정|법|영)?(\s?)(제(\d+)조(?:의(\d+))?)/g,(m0,pre,sp,art,n,mm)=>{
+    const td=pre?REFDOC[pre]:d; if(!td)return m0;
+    const hit=(byDoc[td]||[]).find(s=>{const k=artKey(s);return k&&k[0]===+n&&k[1]===(mm?+mm:0);}); if(!hit)return m0;
+    return (pre||'')+sp+`<span class="xref" data-s="${hit.i}" title="${esc(DOC[td].short)} ${esc(hit.t)}">${art}</span>`;});
+}
+function bodyHTML(s){
+  const re=hlRe(terms), hl=t=>{let e=esc(t);if(re)e=e.replace(re,'<mark>$1</mark>');return linkify(e,s.d);};
+  let h='',inT=false,rows=[];
+  const flush=()=>{if(!rows.length)return;const w=Math.max(...rows.map(r=>r.length));h+='<div class="tbl"><table>'+rows.map(r=>'<tr>'+r.map((c,i)=>`<td${i===r.length-1&&r.length<w?` colspan="${w-r.length+1}"`:''}>${hl(c)}</td>`).join('')+'</tr>').join('')+'</table></div>';rows=[];};
+  for(const l of s.x.split('\n')){
+    if(l==='[표]'){inT=true;rows=[];continue;} if(l==='[/표]'){inT=false;flush();continue;}
+    if(inT){rows.push(l.split(/\s\|\s/));continue;}
+    h+=`<p class="${lineCls(l)}">${hl(l)}</p>`;
+  }
+  flush(); return h;
+}
+let lastFocus=null;
+function openSec(i){
+  const s=S[i]; if(!s)return; const d=DOC[s.d], L=byDoc[s.d], k=L.indexOf(s), pv=L[k-1], nx=L[k+1];
+  if($('sheet').hidden) lastFocus=document.activeElement;
+  $('sheet').innerHTML=`<div class="sh-in"><div class="sh-bar">${srcTag(s.d)}<span class="sp"></span><button type="button" class="ghost" id="sh-copy">복사</button><button type="button" class="ghost" id="sh-close" aria-label="닫기">닫기</button></div>
+  <div class="sh-meta">${esc(d.name)} · ${esc(d.meta)}</div>${s.p?`<div class="sh-path">${esc(s.p)}</div>`:''}<h1 class="sh-title">${esc(s.t)}</h1><div class="body">${bodyHTML(s)}</div>
+  <div class="sh-nav"><button type="button" ${pv?`data-s="${pv.i}"`:'style="visibility:hidden"'}>← ${pv?esc(pv.t):''}</button><button type="button" ${nx?`data-s="${nx.i}"`:'style="visibility:hidden"'}>${nx?esc(nx.t):''} →</button></div></div>`;
+  $('sheet').hidden=false; $('scrim').hidden=false; $('sheet').scrollTop=0; document.body.style.overflow='hidden';
+  $('sh-close').onclick=closeSheet; $('sh-close').focus();
+  $('sh-copy').onclick=()=>copy(`[${ORG[d.org]}] 「${d.name}」 ${s.t}\n${s.x.replace(/\[\/?표\]\n?/g,'')}\n(${d.meta})`);
+}
+function closeSheet(){$('sheet').hidden=true;$('scrim').hidden=true;document.body.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus();}
+$('scrim').onclick=closeSheet;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('sheet').hidden)closeSheet();});
+$('sheet').addEventListener('click',e=>{const x=e.target.closest('[data-s]');if(x)openSec(+x.dataset.s);});
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800);}
+function copy(txt){const ok=()=>toast('복사했습니다');const fb=()=>{const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok();}catch(e){toast('복사하지 못했습니다. 본문을 직접 선택해 주세요');}ta.remove();};try{navigator.clipboard.writeText(txt).then(ok,fb);}catch(e){fb();}}
+
+renderSearch();
+})();
+</script>
+<script>if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body>
+</html>
